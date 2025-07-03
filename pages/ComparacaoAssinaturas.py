@@ -41,6 +41,12 @@ class ModeloLimpezaAssinaturas:
         self.output_folder = 'dados/clean_signatures'
         self.folder_list = [self.input_folder, self.output_folder]
 
+        try:
+            os.makedirs('dados/assi_identificadas')
+            os.makedirs('dados/clean_signatures')
+        except FileExistsError:
+            pass
+
         if 'image_data1' not in st.session_state:
             st.session_state.image_data1 = None
         if 'image_data2' not in st.session_state:
