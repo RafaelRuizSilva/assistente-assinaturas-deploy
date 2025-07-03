@@ -1,0 +1,15 @@
+# Ignorar ambiente virtual
+venv/
+
+# Ignorar checkpoints do Jupyter
+notebooks/.ipynb_checkpoints/
+modelos_treinados/.ipynb_checkpoints/
+
+# Ignorar configurações do PyCharm/IDEA
+.idea/
+
+# Ignorar arquivos de log de erro
+errors.log
+
+# Ignorar cache do Python
+__pycache__/
