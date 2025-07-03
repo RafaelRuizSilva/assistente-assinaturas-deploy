@@ -13,3 +13,11 @@ errors.log
 
 # Ignorar cache do Python
 __pycache__/
+
+# Ignorar dados específicos
+dados/clean/
+dados/noisy/
+dados/full_forg/
+dados/full_org/
+dados/full_forg_pre_proc/
+dados/full_org_pre_proc/
