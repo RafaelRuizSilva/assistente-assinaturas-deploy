@@ -7,6 +7,7 @@ import numpy as np
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
+import gdown
 from keras.src.saving import load_model
 from st_img_pastebutton import paste
 from io import BytesIO
@@ -15,16 +16,27 @@ from keras.src.utils.image_utils import img_to_array
 from modelo_similaridade import SignatureVerificationPipeline
 
 @st.cache_data
-def load_signature_model():
-    return load_model('modelos_treinados/best_model.h5')
+def load_signature_model(model_path_output, link_drive):
+    model_path = model_path_output
+
+    # Cria o diretório se não existir
+    os.makedirs(os.path.dirname(model_path), exist_ok=True)
+
+    # Baixa o modelo se ainda não estiver salvo localmente
+    if not os.path.exists(model_path):
+        url = link_drive
+        gdown.download(url, model_path, quiet=False, fuzzy=True)
+
+    return load_model(model_path)
 
 class ModeloLimpezaAssinaturas:
     def __init__(self):
         st.set_page_config(layout="wide")
         st.header("Comparador de assinaturas")
 
-        self.caminho_save_input_usuario = 'dados_iara_vision/img_input_user.png'
-        self.model = load_signature_model()
+        self.model = load_signature_model('modelos_treinados/best_model.h5',
+        'https://drive.google.com/file/d/1xCftLBPLD8y89evl4VjL4IyfOU1hkPpx/view?usp=sharing')
+
         self.input_folder = 'dados/assi_identificadas'
         self.output_folder = 'dados/clean_signatures'
         self.folder_list = [self.input_folder, self.output_folder]
@@ -86,7 +98,8 @@ class ModeloLimpezaAssinaturas:
 
     @staticmethod
     def verifica_necessidade_limpeza(img_array):
-        clf_ruido = load_model("modelos_treinados/best_classificador.h5")
+        clf_ruido = load_signature_model("modelos_treinados/best_classificador.h5",
+                                         'https://drive.google.com/file/d/1Q5hHhVQwBlxNmqfozpYsnrJUYhMvN8mH/view?usp=sharing')
         pred = clf_ruido.predict(img_array)
         return pred[0] > 0.5
 

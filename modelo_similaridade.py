@@ -11,6 +11,8 @@ from tensorflow.keras.applications.resnet50 import preprocess_input
 from tqdm import tqdm
 import joblib
 import seaborn as sns
+import gdown
+import os
 
 
 class SignatureVerificationPipeline:
@@ -113,7 +115,16 @@ class SignatureVerificationPipeline:
         return grid.best_params_
 
     def load_pipeline(self, filename):
-        pipeline = joblib.load(filename)
+
+        link_drive = 'https://drive.google.com/file/d/1UafHP_he6JxorKzRqrwQuG7LtebrvieE/view?usp=sharing'
+        model_path = 'modelos_treinados/SVM_assinaturas.pkl'
+
+        # Baixa o modelo se ainda não estiver salvo localmente
+        if not os.path.exists(model_path):
+            url = link_drive
+            gdown.download(url, model_path, quiet=False, fuzzy=True)
+
+        pipeline = joblib.load(model_path)
         self.feature_extractor = pipeline['feature_extractor']
         self.classifier = pipeline['classifier']
         print('Pipeline carregado com sucesso!')
