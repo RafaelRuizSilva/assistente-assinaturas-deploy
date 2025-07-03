@@ -123,7 +123,8 @@ class ModeloLimpezaAssinaturas:
             original_img = Image.open(os.path.join(input_folder, filename)).convert('L')
             original_size = original_img.size
             padded_img = ModeloLimpezaAssinaturas.resize_with_padding(original_img, target_size)
-            img_array = np.expand_dims(img_to_array(padded_img), axis=0) / 255.0
+            img_array = img_to_array(padded_img) / 255.0
+            img_array = np.expand_dims(img_array, axis=0)
 
             for img in lista_imgs_ruidosas:
                 if img == "Imagem 1" and filename == "assinatura_1.png":
@@ -135,10 +136,11 @@ class ModeloLimpezaAssinaturas:
                 else:
                     ruidosa = False
 
-            if limpar_ruidos and ModeloLimpezaAssinaturas.verifica_necessidade_limpeza(img_array):
+            if limpar_ruidos and ModeloLimpezaAssinaturas.verifica_necessidade_limpeza(img_array)[0]:
                 ruidosa = True
 
             if ruidosa:
+                ruidosa=False
                 cont += 1
                 clean_img = model.predict(img_array)
                 clean_img = (clean_img[0] * 255).astype(np.uint8)
@@ -156,16 +158,18 @@ class ModeloLimpezaAssinaturas:
 
                 cv2.imwrite(os.path.join(output_folder, filename), np.array(clean_img_resized))
             else:
+
                 _, _, filtro = ModeloLimpezaAssinaturas.aplica_filtro(self, self.filtro)
 
                 if filtro is not None:
                     try:
-                        original_img = filtro(original_img)
-                        original_img = np.array(original_img)
+                        padded_img = filtro(padded_img)
+                        padded_img = np.array(padded_img)
                     except:
-                        original_img = filtro(np.array(original_img))
+                        padded_img = filtro(np.array(padded_img))
 
-                cv2.imwrite(os.path.join(output_folder, filename), np.array(original_img))
+                padded_img = cv2.resize(np.array(padded_img), original_size, interpolation=cv2.INTER_LINEAR)
+                cv2.imwrite(os.path.join(output_folder, filename), np.array(padded_img))
 
         return cont
 
