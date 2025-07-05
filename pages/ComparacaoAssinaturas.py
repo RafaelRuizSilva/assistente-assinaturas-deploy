@@ -13,7 +13,7 @@ from io import BytesIO
 import base64
 from keras.src.utils.image_utils import img_to_array
 from modelo_similaridade import SignatureVerificationPipeline
-
+import cv2
 
 @st.cache_data
 def load_signature_model(model_path_output, link_drive):
@@ -110,8 +110,6 @@ class ModeloLimpezaAssinaturas:
         return pred[0] > 0.5
 
     def save_clean_images(self, input_folder, output_folder, model, limpar_ruidos=True, lista_imgs_ruidosas=None, target_size=(128, 128)):
-        import cv2
-
         if lista_imgs_ruidosas is None:
             lista_imgs_ruidosas = []
 
@@ -201,7 +199,6 @@ class ModeloLimpezaAssinaturas:
 
     @staticmethod
     def filtro_nitidez3(img):
-        import cv2
         kernel_sharpening = np.array([[-1, -1, -1],
                                       [-1, 9, -1],
                                       [-1, -1, -1]])
