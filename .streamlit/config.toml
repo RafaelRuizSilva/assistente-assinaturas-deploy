@@ -3,3 +3,6 @@ base="light"
 primaryColor="#03177f"
 secondaryBackgroundColor="#98acfd"
 textColor="#000000"
+
+[server]
+headless = true

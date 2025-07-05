@@ -1,6 +1,5 @@
 import streamlit as st
 from PIL import Image, ImageEnhance, ImageOps
-import cv2
 import os
 import numpy as np
 
@@ -14,6 +13,7 @@ from io import BytesIO
 import base64
 from keras.src.utils.image_utils import img_to_array
 from modelo_similaridade import SignatureVerificationPipeline
+import cv2
 
 @st.cache_data
 def load_signature_model(model_path_output, link_drive):
