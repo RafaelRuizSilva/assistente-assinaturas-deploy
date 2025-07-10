@@ -4,7 +4,7 @@
 Um sistema inteligente construído com Python e Streamlit para **análise e verificação de autenticidade de assinaturas**.  
 O projeto combina modelos de deep learning com uma interface visual intuitiva para detectar ruídos, limpar assinaturas e validar sua autenticidade.
 
-![Interface do Assistente](./assets/interface.png)
+🔗 Acesse o app: [Signature Assistant](https://signature-assistant-dep.streamlit.app/)
 
 ---
 
@@ -18,7 +18,8 @@ O assistente realiza **3 etapas principais** com modelos especializados:
 2. 🧹 **Limpeza de Ruído (Denoising)**  
    Modelo **ResUNet** para reconstrução de imagens limpas a partir de versões ruidosas.  
    Arquitetura baseada em U-Net com blocos residuais:  
-   ![Arquitetura ResUNet](./assets/resunet.png)
+   <img width="574" height="1048" alt="image" src="https://github.com/user-attachments/assets/7d676a98-6eb7-4452-8cf4-56311de87439" />
+
 
 3. ✅ **Verificação de Autenticidade**  
    Arquitetura **ResNet50 + SVM (RBF kernel)** treinada para identificar se duas assinaturas são **genuínas** ou **forjadas**.
@@ -70,10 +71,12 @@ O app abrirá no navegador e permitirá que você cole ou selecione imagens de a
 ## 📷 Exemplos
 
 #### Upload e análise de assinaturas:
-![Etapas da análise](./assets/analise.png)
+<img width="733" height="850" alt="image" src="https://github.com/user-attachments/assets/27bb90fa-303f-49cf-aace-1cba4bc39c5d" />
+
 
 #### Resultado final com probabilidade de falsificação:
-![Resultado](./assets/resultado.png)
+<img width="727" height="597" alt="image" src="https://github.com/user-attachments/assets/8a458827-eb31-4568-b9e4-03548e836317" />
+
 
 ---
 
